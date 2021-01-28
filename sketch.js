@@ -2,19 +2,23 @@ var end = 0;
 var startMenu = 1;
 var chracterSelectMenu=2;
 var howToPlayMenu = 3;
-var play = 4;
+var play1 = 4.1;
+var play2 = 4.2;
+var play3 = 4.3;
+
 
 var gameStates = startMenu;
 var spaceship,spaceshipImage1,chracterSpaceShipSelect1;
 var space,spaceImage;
-var enemy,enemyImage;
+var enemy,enemyImage1,enemyImage2;
 var enemyGroup;
 var startButton,startbuttonImage;
 
 function preload(){
 
 spaceImage = loadImage("Space.png");
-enemyImage = loadImage("meteor.png")
+enemyImage1 = loadImage("meteor.png")
+enemyImage2 = loadImage("playerufo-1 - Copy.png")
 spaceshipImage1 = loadImage("playerufo-1.png");
 startbuttonImage = loadImage("startbuttonv2.png");
 
@@ -90,13 +94,13 @@ if(gameStates === howToPlayMenu){
 
  if (keyDown("space")) {
 
-  gameStates = play;
+  gameStates = play1;
 
   }
 
 }
 
-if(gameStates === play){
+if(gameStates === play1){
 
   spawnObstacles();
   space.visible=true;
@@ -109,7 +113,7 @@ if(gameStates === play){
 
   if(spaceship.isTouching(enemyGroup)){
 
-   gameStates = end;
+   //gameStates = end;
   
 
   }
@@ -129,27 +133,48 @@ drawSprites();
 
 function spawnObstacles(){
   
-  if(frameCount % 120 === 0){
+  if(frameCount % 120 === 0 && gameStates === play1){
 
-   enemy = createSprite(600,Math.round(random(10,580)),10,10);
-   enemy.addImage("meteorImage",enemyImage);
+    enemy = createSprite(600,Math.round(random(10,580)),10,10);
+    var rand = Math.round(random(1,2))
+    console.log(rand);
+    switch (rand) {
+      case 1:
+        
+        enemy.addImage("meteorImage",enemyImage1);
+
+        break;
+    
+      default:  
+      enemy.addImage("ufo",enemyImage2);
+        break;
+    }
    enemy.scale = 0.2;
     enemy.velocityX = -4;
     enemyGroup.destroyEach=60;
    enemyGroup.add(enemy);
+
   }
   
 }
 function KeyPressed(){
 
-if(keyDown(UP_ARROW)){
+if(keyDown("w")){
 
 spaceship.y=spaceship.y-3;
 
 }
-if(keyDown(DOWN_ARROW)){
+if(keyDown("s")){
 
 spaceship.y=spaceship.y+3;
 
 }
+}
+function keyPressed(){
+
+//if(keyDown)
+
+
+
+
 }

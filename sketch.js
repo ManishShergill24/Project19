@@ -13,6 +13,7 @@ var space,spaceImage;
 var enemy,enemyImage1,enemyImage2;
 var enemyGroup;
 var startButton,startbuttonImage;
+var earthSprite,ufoSprite,MeteorSprite,bulletSprite;
 
 function preload(){
 
@@ -149,7 +150,7 @@ function spawnObstacles(){
       enemy.addImage("ufo",enemyImage2);
         break;
     }
-   enemy.scale = 0.2;
+   enemy.scale = 0.4;
     enemy.velocityX = -4;
     enemyGroup.destroyEach=60;
    enemyGroup.add(enemy);

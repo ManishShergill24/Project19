@@ -17,11 +17,12 @@ var earthSprite,ufoSprite,MeteorSprite,bulletSprite;
 
 function preload(){
 
-spaceImage = loadImage("Space.png");
-enemyImage1 = loadImage("meteor.png")
-enemyImage2 = loadImage("playerufo-1 - Copy.png")
-spaceshipImage1 = loadImage("playerufo-1.png");
-startbuttonImage = loadImage("startbuttonv2.png");
+spaceImage = loadImage("pictures/Space.png");
+enemyImage1 = loadImage("pictures/meteor.png")
+enemyImage2 = loadImage("pictures/playerufo-1 - Copy.png")
+spaceshipImage1 = loadImage("pictures/playerufo-1.png");
+startbuttonImage = loadImage("pictures/startbuttonv2.png");
+bulletSpriteImg = loadAnimation("pictures/Misslep1.png","pictures/Misslep2.png","pictures/Misslep3.png","pictures/Misslep4last.png")
 
 }
 
@@ -42,10 +43,11 @@ createCanvas(600,600);
   startButton.scale=0.3;
   startButton.visible=false;
 
-  chracterSpaceShipSelect1 = createSprite(100,300,10,10);
+  chracterSpaceShipSelect1 = createSprite(300,300,10,10);
   chracterSpaceShipSelect1.addImage("ufoPlayerSelected",spaceshipImage1);
   chracterSpaceShipSelect1.scale=0.3;
   chracterSpaceShipSelect1.visible= false;
+  
 
   enemyGroup = new Group();
 enemyGroup.debug=true;
@@ -72,8 +74,6 @@ chracterSpaceShipSelect1.visible=true;
 textSize(20)
 stroke("white")
 text("Select A SpaceShip",200,150);
-text("Coming Soon!",200,300);
-text("Coming Soon!",400,300);
 
 if(mousePressedOver(chracterSpaceShipSelect1)){
 
@@ -84,9 +84,15 @@ gameStates=howToPlayMenu;
 if(gameStates === howToPlayMenu){
   
   textSize(15);
-  stroke("white");
-  text("you need to dodge all the astroids using the down arrow key and up arrow key",50,30);
-  text("press space to start",50,60);
+  fill("white");
+  text("Story: The Earth, A Civilized Planet, is now in Danger! Help Us Protect ",50,30);
+  text("Earth, Your Payment will be judged by how many UFO's You have destroyed",50,50);
+  text("(every 100 points = $10)",50,70)
+  text("Controls: W = Move Up",50,100)
+  text("S = Move Down",115,120)
+  text("A = Move Left",115,140)
+  text("D = Move Right",115,160)
+  text("Left Click on Mouse = Shoot Missiles/Bullets",115,180)
 
 
   chracterSpaceShipSelect1.visible=false;

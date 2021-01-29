@@ -13,7 +13,7 @@ var space,spaceImage;
 var enemy,enemyImage1,enemyImage2;
 var enemyGroup;
 var startButton,startbuttonImage;
-var earthSprite,ufoSprite,MeteorSprite,bulletSprite;
+var earthSprite,ufoSprite,MeteorSprite,bulletSprite,bulletSpriteImg;
 
 function preload(){
 
@@ -22,12 +22,12 @@ enemyImage1 = loadImage("pictures/meteor.png")
 enemyImage2 = loadImage("pictures/playerufo-1 - Copy.png")
 spaceshipImage1 = loadImage("pictures/playerufo-1.png");
 startbuttonImage = loadImage("pictures/startbuttonv2.png");
-bulletSpriteImg = loadAnimation("pictures/Misslep1.png","pictures/Misslep2.png","pictures/Misslep3.png","pictures/Misslep4last.png")
+bulletSpriteImg = loadImage("pictures/Misslep1.png")
 
 }
 
 function setup(){
-createCanvas(600,600);
+createCanvas(800,600);
 
   space = createSprite(300,300);
   space.addImage("backgroundImage",spaceImage);
@@ -38,19 +38,21 @@ createCanvas(600,600);
   spaceship.scale=0.3;
   spaceship.visible=false;
 
+  
+
   startButton = createSprite(300,350,10,10);
   startButton.addImage(startbuttonImage);
   startButton.scale=0.3;
   startButton.visible=false;
 
-  chracterSpaceShipSelect1 = createSprite(300,300,10,10);
+  chracterSpaceShipSelect1 = createSprite(100,300,10,10);
   chracterSpaceShipSelect1.addImage("ufoPlayerSelected",spaceshipImage1);
   chracterSpaceShipSelect1.scale=0.3;
   chracterSpaceShipSelect1.visible= false;
   
 
   enemyGroup = new Group();
-enemyGroup.debug=true;
+  bulletGroup = new Group();
 
 }
 
@@ -64,7 +66,9 @@ if(mousePressedOver(startButton)){
   gameStates = chracterSelectMenu;
 }
 }
+
 console.log(gameStates);
+
 if(gameStates === chracterSelectMenu){
 startButton.visible = false;
 space.visible=false;
@@ -77,6 +81,7 @@ text("Select A SpaceShip",200,150);
 
 if(mousePressedOver(chracterSpaceShipSelect1)){
 
+console.log("doublepress")
 gameStates=howToPlayMenu;
 
 }
@@ -93,6 +98,8 @@ if(gameStates === howToPlayMenu){
   text("A = Move Left",115,140)
   text("D = Move Right",115,160)
   text("Left Click on Mouse = Shoot Missiles/Bullets",115,180)
+
+
 
 
   chracterSpaceShipSelect1.visible=false;
@@ -117,11 +124,17 @@ if(gameStates === play1){
 
   KeyPressed();
 
+  if(keyCode === 114 && gameStates === play1 || keyCode === 114 && gameStates === play2 || keyCode === 114 && gameStates === play3){
 
-  if(spaceship.isTouching(enemyGroup)){
-
-   //gameStates = end;
+    CreateBullets();
   
+    }
+
+  if(bulletGroup.isTouching(enemyGroup)){
+
+    bulletGroup.destroyEach()
+    enemyGroup.destroyEach()
+
 
   }
 
@@ -158,7 +171,7 @@ function spawnObstacles(){
     }
    enemy.scale = 0.4;
     enemy.velocityX = -4;
-    enemyGroup.destroyEach=60;
+    enemyGroup.lifetime=60;
    enemyGroup.add(enemy);
 
   }
@@ -168,20 +181,27 @@ function KeyPressed(){
 
 if(keyDown("w")){
 
-spaceship.y=spaceship.y-3;
+spaceship.y=spaceship.y-5;
 
 }
 if(keyDown("s")){
 
-spaceship.y=spaceship.y+3;
+spaceship.y=spaceship.y+5;
 
 }
 }
-function keyPressed(){
+function CreateBullets(){
 
-//if(keyDown)
-
-
-
-
+  if(frameCount%10 === 0){
+    var bulletSprite= createSprite(100, 100, 60, 10);
+    bulletSprite.addImage(bulletSpriteImg);
+    bulletSprite.x = spaceship.x;
+    bulletSprite.y=spaceship.y;
+    bulletSprite.velocityX = 4;
+    bulletSprite.lifetime = 140;
+    bulletSprite.scale = 0.3;
+    bulletGroup.add(bulletSprite);
+    return bulletSprite;
+  
+}
 }

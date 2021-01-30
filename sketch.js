@@ -3,8 +3,6 @@ var startMenu = 1;
 var chracterSelectMenu=2;
 var howToPlayMenu = 3;
 var play1 = 4.1;
-var play2 = 4.2;
-var play3 = 4.3;
 
 
 var gameStates = startMenu;
@@ -14,6 +12,7 @@ var enemy,enemyImage1,enemyImage2;
 var enemyGroup;
 var startButton,startbuttonImage;
 var earthSprite,ufoSprite,MeteorSprite,bulletSprite,bulletSpriteImg;
+var points =0;
 
 function preload(){
 
@@ -51,9 +50,11 @@ createCanvas(800,600);
   chracterSpaceShipSelect1.visible= false;
   
 
-  enemyGroup = new Group();
-  bulletGroup = new Group();
+  enemyGroup = createGroup();
+  bulletGroup = createGroup();
 
+  spaceship.setCollider("circle",0,0,40)
+  spaceship.debug = true;
 }
 
 function draw(){
@@ -95,8 +96,7 @@ if(gameStates === howToPlayMenu){
   text("(every 100 points = $10)",50,70)
   text("Controls: W = Move Up",50,100)
   text("S = Move Down",115,120)
-  text("A = Move Left",115,140)
-  text("D = Move Right",115,160)
+  text("Press Space to start playing!",115,140)
   text("Left Click on Mouse = Shoot Missiles/Bullets",115,180)
 
 
@@ -132,23 +132,37 @@ if(gameStates === play1){
 
   if(bulletGroup.isTouching(enemyGroup)){
 
+    points +=1;
+    console.log(points)
     bulletGroup.destroyEach()
     enemyGroup.destroyEach()
 
 
   }
 
+if(enemyGroup.isTouching(spaceship) || enemyGroup.x===0){
+
+
+gameStates=end;
+
+
+}
+
 }
 
 if(gameStates === end){
 
   space.visible=false;
+  spaceship.destroy();
+  enemyGroup.destroyEach();
   textSize(20);
   text("Thanks for Playing!, You did Great! :D",100,200);
 
 }
   
 drawSprites();
+textSize(20);
+  text("your Points: "+ points, 100,550)
 }
 
 function spawnObstacles(){
@@ -156,19 +170,7 @@ function spawnObstacles(){
   if(frameCount % 120 === 0 && gameStates === play1){
 
     enemy = createSprite(600,Math.round(random(10,580)),10,10);
-    var rand = Math.round(random(1,2))
-    console.log(rand);
-    switch (rand) {
-      case 1:
-        
-        enemy.addImage("meteorImage",enemyImage1);
-
-        break;
-    
-      default:  
-      enemy.addImage("ufo",enemyImage2);
-        break;
-    }
+    enemy.addImage("ufo",enemyImage2);
    enemy.scale = 0.4;
     enemy.velocityX = -4;
     enemyGroup.lifetime=60;

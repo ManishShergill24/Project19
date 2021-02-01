@@ -97,7 +97,7 @@ if(gameStates === howToPlayMenu){
   text("Controls: W = Move Up",50,100)
   text("S = Move Down",115,120)
   text("Press Space to start playing!",115,140)
-  text("Left Click on Mouse = Shoot Missiles/Bullets",115,180)
+  text("R = Shoot Missiles/Bullets",115,180)
 
 
 
@@ -124,7 +124,7 @@ if(gameStates === play1){
 
   KeyPressed();
 
-  if(keyCode === 114 && gameStates === play1 || keyCode === 114 && gameStates === play2 || keyCode === 114 && gameStates === play3){
+  if(keyCode === 114 && gameStates === play1){
 
     CreateBullets();
   
